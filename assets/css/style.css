@@ -1,0 +1,46 @@
+main {
+    padding: 2rem;
+}
+
+body {
+    background: black;
+    color: wheat;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    background: #dc91e2;
+    color: black;
+    padding: 1rem;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 1rem;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+footer {
+    background: #dc91e2;
+    color: black;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
