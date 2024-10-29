@@ -1,3 +1,6 @@
+<?php
+    $title = "Lil PHP Proj"
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +10,7 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-    <h1>Lil PHP Proj</h1>
+    <h1>$title</h1>
     <script src="/assets/js/main.js"></script>
 </body>
 </html>
