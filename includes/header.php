@@ -1,5 +1,5 @@
 <?php
-    $title = isset($title) ? $title : "Contributions";
+    $title = $title ?? "Contributions";
 ?>
 <!DOCTYPE html>
 <html lang="en">
