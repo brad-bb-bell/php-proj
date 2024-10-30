@@ -9,7 +9,7 @@
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="/php-proj/assets/css/style.css">
 </head>
-<header class="bg-[#dc91e2] text-black p-4 w-full">
+<header class="bg-purple-500 text-black p-4 w-full">
     <div class="max-w-screen-lg mx-auto flex">
         <span class="">📈 Contributions 📈</span>
         <nav class="ml-12">
