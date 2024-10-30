@@ -3,9 +3,10 @@ require_once '../config/create_db.php';
 require_once '../includes/header.php';
 ?>
 
-
-<h1 class="text-center text-xl">Add new contribution</h1>
-<div class="max-w-lg mx-auto p-6 bg-red-500">
+<div class="max-w-screen-lg mx-auto">
+    <div class="bg-amber-50 max-w-lg rounded-xl mx-auto">
+<h1 class="text-center text-xl rounded-t-xl border-b border-black">Add new contribution</h1>
+<div class=" mx-auto p-6 bg-amber-50 rounded-b-xl">
     <form action="index.php" method="post" class="grid gap-6">
         <div class="grid grid-cols-2 items-center gap-4">
             <!-- Date -->
@@ -50,20 +51,21 @@ require_once '../includes/header.php';
                 </select>
             </div>
 
+        </div>
             <!-- Amount -->
-            <div class="flex flex-col space-y-2">
-                <label for="amount" class="text-left">Amount:</label>
+            <div class="flex flex-col space-y-2 mx-auto">
+                <label for="amount" class="text-center">Amount:</label>
                 <input type="number" id="amount" class="p-2 border rounded"/>
             </div>
-        </div>
 
-        <button type="submit" class="bg-[#dc91e2] text-black py-2 px-4 rounded hover:bg-[#c77dcc]">
+        <button type="submit" class="mx-auto bg-purple-400 w-full text-black py-2 px-4 rounded hover:bg-purple-500">
             Submit
         </button>
     </form>
 </div>
+    </div>
 
-<table class="border-2 border-black w-full">
+<table class="border-2 border-black w-full bg-amber-50 text-black rounded">
     <thead class="border-2 border-black">
         <tr>
             <th>Date</th>
@@ -138,5 +140,6 @@ require_once '../includes/header.php';
         </tr>
     </tfoot>
 </table>
+</div>
 
 <?php require_once '../includes/footer.php'; ?>

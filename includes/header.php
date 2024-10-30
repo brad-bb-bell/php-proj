@@ -9,7 +9,7 @@
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="/php-proj/assets/css/style.css">
 </head>
-<header class="bg-purple-500 text-black p-4 w-full">
+<header class="bg-purple-400 text-black p-4 w-full">
     <div class="max-w-screen-lg mx-auto flex">
         <span class="">📈 Contributions 📈</span>
         <nav class="ml-12">
@@ -24,4 +24,4 @@
         </nav>
     </div>
 </header>
-<main class="p-8 max-w-screen-lg mx-auto">
+<main class="p-8 w-full mx-auto bg-black min-h-[calc(100dvh-7rem)]">

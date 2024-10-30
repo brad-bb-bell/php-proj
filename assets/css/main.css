@@ -1,19 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+    th {
+        @apply text-left p-2;
+    }
 
-th {
-    @apply text-left p-2
-}
+    tr {
+        @apply border-b border-gray-200;
+    }
 
-tr {
-    @apply border-b border-gray-200
-}
+    td {
+        @apply p-2;
+    }
 
-td {
-    @apply p-2
-}
-
-a {
-    @apply hover:underline;
+    a {
+        @apply hover:underline;
+    }
 }
