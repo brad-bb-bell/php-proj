@@ -21,4 +21,4 @@
         </ul>
     </nav>
 </header>
-</html>
+<main class="p-8 max-w-screen-lg mx-auto">
