@@ -15,11 +15,14 @@
         <span class="font-semibold">📈 Contributions 📈</span>
         <nav class="ml-12">
             <ul class="list-none p-0 m-0">
-                <li class="inline mr-4">
+                <li class="inline mr-7">
                     <a href="/php-proj/public/index.php" class="text-gray-800 hover:text-black no-underline">Home</a>
                 </li>
-                <li class="inline mr-4">
-                    <a href="/php-proj/public/transactions.php" class="text-gray-800 hover:text-black no-underline">Transactions</a>
+                <li class="inline mr-7">
+                    <a href="/php-proj/public/transactions.php" class="text-gray-800 hover:text-black no-underline">All Transactions</a>
+                </li>
+                <li class="inline mr-7">
+                    <a href="/php-proj/public/contributions-by-type.php" class="text-gray-800 hover:text-black no-underline">Contributions by Type</a>
                 </li>
             </ul>
         </nav>
