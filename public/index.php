@@ -1,9 +1,51 @@
 <?php
 require_once '../config/create_db.php';
 require_once '../includes/header.php';
+
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'contributions';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "INSERT INTO Transactions (date, account, account_type, investment_type, amount)
+                VALUES (:date, :account, :account_type, :investment_type, :amount)";
+
+        $stmt = $database->prepare($sql);
+
+        $stmt->bindParam(':date', $_POST['date']);
+        $stmt->bindParam(':account', $_POST['account']);
+        $stmt->bindParam(':account_type', $_POST['account_type']);
+        $stmt->bindParam(':investment_type', $_POST['investment_type']);
+        $stmt->bindParam(':amount', $_POST['amount']);
+
+        $stmt->execute();
+
+        header('Location: ./?status=success');
+        exit();
+    } catch (PDOException $e) {
+        header('Location: ./?status=error&message=' . urlencode($e->getMessage()));
+        exit();
+    }
+}
 ?>
 
 <div class="max-w-screen-lg mx-auto">
+    <?php if (isset($_GET['status'])): ?>
+        <?php if ($_GET['status'] === 'success'): ?>
+            <div class="bg-green-100 border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
+                Transaction saved successfully!
+            </div>
+        <?php elseif ($_GET['status'] === 'error'): ?>
+            <div class="bg-red-100 border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
+                Error saving transaction: <?php echo htmlspecialchars($_GET['message']); ?>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
     <div class="bg-amber-50 max-w-lg rounded-xl mx-auto mb-8">
 <h1 class="text-center text-xl rounded-t-xl border-b border-black">Add new contribution</h1>
 <div class=" mx-auto p-6 bg-amber-50 rounded-b-xl">
@@ -12,7 +54,9 @@ require_once '../includes/header.php';
             <!-- Date -->
             <div class="flex flex-col space-y-2">
                 <label for="date" class="text-left">Date:</label>
-                <input type="date" id="date" class="p-2 border rounded"/>
+                <input type="date" id="date" name="date" value="<?php echo date(
+                    'Y-m-d',
+                ); ?>" class="p-2 border rounded"/>
             </div>
 
             <!-- Account -->
@@ -55,7 +99,7 @@ require_once '../includes/header.php';
             <!-- Amount -->
             <div class="flex flex-col space-y-2 mx-auto">
                 <label for="amount" class="text-center">Amount:</label>
-                <input type="number" id="amount" class="p-2 border rounded"/>
+                <input type="number" id="amount" name="amount" class="p-2 border rounded"/>
             </div>
 
         <button type="submit" class="mx-auto bg-purple-400 w-full text-black py-2 px-4 rounded hover:bg-purple-500">
