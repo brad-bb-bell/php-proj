@@ -39,11 +39,15 @@ function getContributionSummaries($database) {
         $yearStmt = $database->query($yearQuery);
         $yearTotal = $yearStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
-        $monthQuery = "SELECT SUM(amount) as total FROM Transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND MONTH(date) = MONTH(CURRENT_DATE())";
+        $monthQuery = "SELECT SUM(amount) as total FROM Transactions 
+                      WHERE YEAR(date) = YEAR(CURRENT_DATE()) 
+                      AND MONTH(date) = MONTH(CURRENT_DATE())";
         $monthStmt = $database->query($monthQuery);
         $monthTotal = $monthStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
-        $lastMonthQuery = "SELECT SUM(amount) as total FROM Transactions WHERE date >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH) AND date < CURRENT_DATE()";
+        $lastMonthQuery = "SELECT SUM(amount) as total FROM Transactions 
+                          WHERE YEAR(date) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
+                          AND MONTH(date) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
         $lastMonthStmt = $database->query($lastMonthQuery);
         $lastMonthTotal = $lastMonthStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
