@@ -1,15 +1,15 @@
 <?php
-require_once '../config/create_table.php';
+require_once '../config/create_db.php';
 require_once '../includes/header.php';
 ?>
 
-<h1 class="text-center">Welcome to Contributions</h1>
 <table class="border-2 border-black w-full">
-    <thead>
+    <thead class="border-2 border-black">
         <tr>
             <th>Date</th>
             <th>Account</th>
-            <th>Type</th>
+            <th>Account Type</th>
+            <th>Investment Type</th>
             <th>Amount</th>
         </tr>
     </thead>
@@ -17,26 +17,66 @@ require_once '../includes/header.php';
     <tr>
         <td>10/30/2024</td>
         <td>TIAA</td>
+        <td>Retirement - 403b</td>
         <td>Mutual Fund</td>
         <td>$100</td>
     </tr>
     <tr>
         <td>10/30/2024</td>
         <td>TIAA</td>
+        <td>Retirement - 403b</td>
         <td>Mutual Fund</td>
         <td>$100</td>
     </tr>
     <tr>
         <td>10/30/2024</td>
         <td>TIAA</td>
+        <td>Retirement - 401a</td>
         <td>Mutual Fund</td>
         <td>$100</td>
     </tr>
     <tr>
-        <td colspan="3">Total</td>
-        <td >$300</td>
+        <td>10/30/2024</td>
+        <td>Robinhood</td>
+        <td>Taxable Brokerage</td>
+        <td>Equities</td>
+        <td>$100</td>
+    </tr>
+    <tr>
+        <td>10/30/2024</td>
+        <td>Robinhood</td>
+        <td>Taxable Brokerage</td>
+        <td>Crypto</td>
+        <td>$100</td>
+    </tr>
+    <tr>
+        <td>10/30/2024</td>
+        <td>Robinhood</td>
+        <td>Retirement - Roth IRA</td>
+        <td>Equities</td>
+        <td>$100</td>
+    </tr>
+    <tr>
+        <td>10/30/2024</td>
+        <td>Vanguard</td>
+        <td>529 College Fund</td>
+        <td>Mutual Fund</td>
+        <td>$100</td>
+    </tr>
+    <tr>
+        <td>10/30/2024</td>
+        <td>Fidelity</td>
+        <td>Business - Taxable Brokerage</td>
+        <td>Equities</td>
+        <td>$100</td>
     </tr>
     </tbody>
+    <tfoot class="border-2 border-black">
+        <tr>
+        <td colspan="4">Total Contributions</td>
+        <td>$500</td>
+        </tr>
+    </tfoot>
 </table>
 
 

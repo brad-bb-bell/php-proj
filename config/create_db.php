@@ -18,9 +18,10 @@ try {
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "CREATE TABLE IF NOT EXISTS Transactions (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    transaction_date DATE NOT NULL,
-    account VARCHAR(30) NOT NULL,
-    account_type VARCHAR(30) NOT NULL,
+    date DATE NOT NULL,
+    account VARCHAR(40) NOT NULL,
+    account_type VARCHAR(40) NOT NULL,
+    investment_type VARCHAR(40) NOT NULL,
     amount DOUBLE NOT NULL
     )";
     $database->exec($sql);
@@ -28,4 +29,3 @@ try {
     echo 'Error creating table';
     echo $e->getMessage();
 }
-?>
