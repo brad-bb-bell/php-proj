@@ -18,7 +18,7 @@
                     <a href="/php-proj/public/index.php" class="text-black no-underline">Home</a>
                 </li>
                 <li class="inline mr-4">
-                    <a href="/php-proj/public/about.php" class="text-black no-underline">About</a>
+                    <a href="/php-proj/public/transactions.php" class="text-black no-underline">Transactions</a>
                 </li>
             </ul>
         </nav>
