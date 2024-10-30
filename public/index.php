@@ -2,7 +2,7 @@
     require_once '../includes/header.php';
 ?>
 
-<h1>Welcome to Contributions</h1>
+<h1 class="text-center">Welcome to Contributions</h1>
 <p>Content will be loaded here</p>
 
 

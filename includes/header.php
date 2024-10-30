@@ -7,13 +7,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="/php-proj/assets/css/style.css">
 </head>
-<header>
+<header class="text-center bg-[#dc91e2] text-black p-4">
     <nav>
-        <ul>
-            <li><a href="../public/index.php">Home</a></li>
-            <li><a href="../public/about.php">About</a></li>
+        <ul class="list-none p-0 m-0">
+            <li class="inline mr-4">
+                <a href="/php-proj/public/index.php" class="text-black no-underline">Home</a>
+            </li>
+            <li class="inline mr-4">
+                <a href="/php-proj/public/about.php" class="text-black no-underline">About</a>
+            </li>
         </ul>
     </nav>
 </header>
