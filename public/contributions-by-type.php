@@ -97,7 +97,7 @@ try {
     ];
 }
 ?>
-
+    <div class="max-w-screen-lg mx-auto">
     <!-- Account Types Section -->
     <h1 class="text-2xl font-bold mb-4 text-center text-purple-50">Contributions by Account Type</h1>
     <div class="grid grid-cols-2 gap-4 mb-8">
@@ -138,5 +138,6 @@ try {
             <h2 class="text-lg font-semibold mb-2">Crypto</h2>
             <p class="text-2xl">$<?php echo number_format($summaries['assetClasses']['cryptoTotal'], 2); ?></p>
         </div>
+    </div>
     </div>
 <?php require_once '../includes/footer.php'; ?>
