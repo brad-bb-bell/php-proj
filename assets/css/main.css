@@ -13,9 +13,4 @@
     td {
         @apply p-2;
     }
-
-    a {
-        @apply text-red-800;
-        @apply hover:text-black;
-    }
 }
