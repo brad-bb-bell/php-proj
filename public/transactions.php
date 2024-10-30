@@ -10,7 +10,7 @@ try {
     $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT date, account, account_type, investment_type, amount FROM Transactions ORDER BY date DESC";
+    $query = "SELECT date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC";
 
     // WHY NOT $database->prepare($query)
     $stmt = $database->query($query);
@@ -62,7 +62,7 @@ function formatInvestmentType($type) {
     return implode(' ', $words);
 }
 ?>
-?>
+
     <div class="max-w-screen-lg mx-auto">
     <table class="border-2 border-black w-full bg-purple-200 text-black rounded">
         <thead class="border-2 border-black">
@@ -80,7 +80,7 @@ function formatInvestmentType($type) {
             <td class="p-2"><?php echo date('m/d/Y', strtotime($transaction['date'])); ?></td>
             <td class="p-2"><?php echo htmlspecialchars(formatAccount($transaction['account'])); ?></td>
             <td class="p-2"><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
-            <td class="p-2"><?php echo htmlspecialchars(formatInvestmentType($transaction['investment_type'])); ?></td>
+            <td class="p-2"><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
             <td class="p-2">$<?php echo number_format($transaction['amount'], 2); ?></td>
         </tr>
         <?php endforeach; ?>
@@ -93,4 +93,4 @@ function formatInvestmentType($type) {
         </tfoot>
     </table>
     </div>
-asset_class
+<?php require_once '../includes/footer.php'; ?>
