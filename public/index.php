@@ -4,7 +4,7 @@ require_once '../includes/header.php';
 ?>
 
 <div class="max-w-screen-lg mx-auto">
-    <div class="bg-amber-50 max-w-lg rounded-xl mx-auto">
+    <div class="bg-amber-50 max-w-lg rounded-xl mx-auto mb-8">
 <h1 class="text-center text-xl rounded-t-xl border-b border-black">Add new contribution</h1>
 <div class=" mx-auto p-6 bg-amber-50 rounded-b-xl">
     <form action="index.php" method="post" class="grid gap-6">
