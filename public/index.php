@@ -43,7 +43,7 @@ function getContributionSummaries($database) {
         $monthStmt = $database->query($monthQuery);
         $monthTotal = $monthStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
-        $lastMonthQuery = "SELECT SUM(amount) as total FROM Transactions WHERE >= DATE_SUB(DATE_FORMAT(CURRENT_DATE() '%Y-%m-01') INTERVAL 1 MONTH) AND date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01')";
+        $lastMonthQuery = "SELECT SUM(amount) as total FROM Transactions WHERE date >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH) AND date < CURRENT_DATE()";
         $lastMonthStmt = $database->query($lastMonthQuery);
         $lastMonthTotal = $lastMonthStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
@@ -61,9 +61,36 @@ function getContributionSummaries($database) {
         ];
     }
 }
+
+try {
+    $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $summaries = getContributionSummaries($database);
+} catch(PDOException $e) {
+    $summaries = [
+        'yearTotal' => 0,
+        'monthTotal' => 0,
+        'lastMonthTotal' => 0
+    ];
+    error_log($e->getMessage());
+}
 ?>
 
 <div class="max-w-screen-lg mx-auto">
+    <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="bg-purple-200 p-4 rounded shadow">
+            <h2 class="text-lg font-semibold mb-2">Contributions This Year</h2>
+            <p class="text-2xl">$<?php echo number_format($summaries['yearTotal'], 2); ?></p>
+        </div>
+        <div class="bg-purple-200 p-4 rounded shadow">
+            <h2 class="text-lg font-semibold mb-2">Contributions This Month</h2>
+            <p class="text-2xl">$<?php echo number_format($summaries['monthTotal'], 2); ?></p>
+        </div>
+        <div class="bg-purple-200 p-4 rounded shadow">
+            <h2 class="text-lg font-semibold mb-2">Contributions Last Month</h2>
+            <p class="text-2xl">$<?php echo number_format($summaries['lastMonthTotal'], 2); ?></p>
+        </div>
+    </div>
     <?php if (isset($_GET['status'])): ?>
         <?php if ($_GET['status'] === 'success'): ?>
             <div class="bg-green-100 border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
@@ -75,9 +102,9 @@ function getContributionSummaries($database) {
             </div>
         <?php endif; ?>
     <?php endif; ?>
-    <div class="bg-amber-50 max-w-lg rounded-xl mx-auto mb-8">
-<h1 class="text-center text-xl rounded-t-xl border-b border-black">Add new contribution</h1>
-<div class=" mx-auto p-6 bg-amber-50 rounded-b-xl">
+    <div class="bg-purple-200 max-w-lg rounded-xl mx-auto mb-8">
+<h1 class="text-center text-xl rounded-t-xl border-b border-black py-1">Add new contribution</h1>
+<div class=" mx-auto p-6 bg-purple-200 rounded-b-xl">
     <form action="index.php" method="post" class="grid gap-6">
         <div class="grid grid-cols-2 items-center gap-4">
             <!-- Date -->
