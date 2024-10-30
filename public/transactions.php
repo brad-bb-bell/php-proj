@@ -1,7 +1,7 @@
 <?php
 require_once '../includes/header.php'; ?>
     <div class="max-w-screen-lg mx-auto">
-    <table class="border-2 border-black w-full bg-amber-50 text-black rounded">
+    <table class="border-2 border-black w-full bg-purple-200 text-black rounded">
         <thead class="border-2 border-black">
         <tr>
             <th>Date</th>

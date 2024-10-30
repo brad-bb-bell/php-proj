@@ -15,6 +15,7 @@
     }
 
     a {
-        @apply hover:underline;
+        @apply text-red-800;
+        @apply hover:text-black;
     }
 }
