@@ -21,7 +21,7 @@ try {
     date DATE NOT NULL,
     account VARCHAR(40) NOT NULL,
     account_type VARCHAR(40) NOT NULL,
-    investment_type VARCHAR(40) NOT NULL,
+    asset_class VARCHAR(40) NOT NULL,
     amount DOUBLE NOT NULL
     )";
     $database->exec($sql);

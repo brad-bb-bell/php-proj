@@ -93,4 +93,4 @@ function formatInvestmentType($type) {
         </tfoot>
     </table>
     </div>
-<?php require_once '../includes/footer.php'; ?>
+asset_class

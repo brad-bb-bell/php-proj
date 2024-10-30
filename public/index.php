@@ -12,15 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "INSERT INTO Transactions (date, account, account_type, investment_type, amount)
-                VALUES (:date, :account, :account_type, :investment_type, :amount)";
+        $sql = "INSERT INTO Transactions (date, account, account_type, asset_class, amount)
+                VALUES (:date, :account, :account_type, :asset_class, :amount)";
 
         $stmt = $database->prepare($sql);
 
         $stmt->bindParam(':date', $_POST['date']);
         $stmt->bindParam(':account', $_POST['account']);
         $stmt->bindParam(':account_type', $_POST['account_type']);
-        $stmt->bindParam(':investment_type', $_POST['investment_type']);
+        $stmt->bindParam(':asset_class', $_POST['asset_class']);
         $stmt->bindParam(':amount', $_POST['amount']);
 
         $stmt->execute();
@@ -137,8 +137,8 @@ try {
 
             <!-- Investment Type -->
             <div class="flex flex-col space-y-2">
-                <label for="investment_type" class="text-left">Investment Type:</label>
-                <select name="investment_type" id="investment_type" class="p-2 border rounded">
+                <label for="asset_class" class="text-left">Investment Type:</label>
+                <select name="asset_class" id="asset_class" class="p-2 border rounded">
                     <option value="mutual-fund">Mutual Fund</option>
                     <option value="equities">Equities</option>
                     <option value="crypto">Crypto</option>
