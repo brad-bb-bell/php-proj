@@ -32,6 +32,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 }
+
+function getContributionSummaries($database) {
+    try {
+        $yearQuery = "SELECT SUM(amount) as total FROM Transactions WHERE YEAR(date) = YEAR(CURRENT_DATE())";
+        $yearStmt = $database->query($yearQuery);
+        $yearTotal = $yearStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+        $monthQuery = "SELECT SUM(amount) as total FROM Transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND MONTH(date) = MONTH(CURRENT_DATE())";
+        $monthStmt = $database->query($monthQuery);
+        $monthTotal = $monthStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+        $lastMonthQuery = "SELECT SUM(amount) as total FROM Transactions WHERE >= DATE_SUB(DATE_FORMAT(CURRENT_DATE() '%Y-%m-01') INTERVAL 1 MONTH) AND date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01')";
+        $lastMonthStmt = $database->query($lastMonthQuery);
+        $lastMonthTotal = $lastMonthStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+        return [
+            'yearTotal' => $yearTotal,
+            'monthTotal' => $monthTotal,
+            'lastMonthTotal' => $lastMonthTotal,
+        ];
+    } catch(PDOException $e) {
+        echo $e->getMessage();
+        return [
+            'yearTotal' => 0,
+            'monthTotal' => 0,
+            'lastMonthTotal' => 0,
+        ];
+    }
+}
 ?>
 
 <div class="max-w-screen-lg mx-auto">
