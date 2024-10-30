@@ -29,7 +29,9 @@ try {
 
 // Helper functions for formatting
 function formatAccount($account) {
-    return strtoupper($account);
+    return $account === 'tiaa'
+        ? 'TIAA'
+        : ucfirst($account);
 }
 
 function formatAccountType($type) {

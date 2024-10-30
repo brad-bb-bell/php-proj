@@ -95,17 +95,7 @@ try {
             <p class="text-2xl">$<?php echo number_format($summaries['lastMonthTotal'], 2); ?></p>
         </div>
     </div>
-    <?php if (isset($_GET['status'])): ?>
-        <?php if ($_GET['status'] === 'success'): ?>
-            <div class="bg-green-100 border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
-                Transaction saved successfully!
-            </div>
-        <?php elseif ($_GET['status'] === 'error'): ?>
-            <div class="bg-red-100 border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
-                Error saving transaction: <?php echo htmlspecialchars($_GET['message']); ?>
-            </div>
-        <?php endif; ?>
-    <?php endif; ?>
+
     <div class="bg-purple-200 max-w-lg rounded-xl mx-auto mb-8">
 <h1 class="text-center text-xl rounded-t-xl border-b border-black py-1">Add new contribution</h1>
 <div class=" mx-auto p-6 bg-purple-200 rounded-b-xl">
@@ -169,6 +159,17 @@ try {
 </div>
     </div>
 
+    <?php if (isset($_GET['status'])): ?>
+        <?php if ($_GET['status'] === 'success'): ?>
+            <div class="bg-green-100 border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
+                Transaction saved successfully!
+            </div>
+        <?php elseif ($_GET['status'] === 'error'): ?>
+            <div class="bg-red-100 border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
+                Error saving transaction: <?php echo htmlspecialchars($_GET['message']); ?>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
 
 </div>
 
