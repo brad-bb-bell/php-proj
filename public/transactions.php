@@ -10,7 +10,7 @@ try {
     $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = 'SELECT date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC';
+    $query = 'SELECT id, date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC';
 
     // WHY NOT $database->prepare($query)
     $stmt = $database->query($query);
@@ -95,7 +95,7 @@ function formatInvestmentType($type): string
             <td><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
             <td><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
             <td>$<?php echo number_format($transaction['amount']); ?></td>
-            <td><a href="/transactions/:id">Edit</a></td>
+            <td><a href="/php-proj/public/edit-transaction.php?id=<?php echo $transaction['id']; ?>" class="border border-purple-400 p-1 rounded">Edit</a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>

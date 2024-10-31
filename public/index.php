@@ -105,70 +105,70 @@ try {
     </div>
 
     <div class="bg-purple-200 max-w-lg rounded-xl mx-auto mb-8">
-<h1 class="text-center text-xl rounded-t-xl border-b border-black py-1">Add new contribution</h1>
-<div class=" mx-auto p-6 bg-purple-200 rounded-b-xl">
-    <form action="index.php" method="post" class="grid gap-6">
-        <div class="grid grid-cols-2 items-center gap-4">
+        <h1 class="text-center text-xl rounded-t-xl border-b border-black py-1">Add new contribution</h1>
+        <div class=" mx-auto p-6 bg-purple-200 rounded-b-xl">
+            <form action="index.php" method="post" class="grid gap-6">
+                <div class="grid grid-cols-2 items-center gap-4">
 
-            <!-- Date -->
-            <div class="flex flex-col space-y-2">
-                <label for="date" class="text-left">Date:</label>
-                <input type="date" id="date" name="date" value="<?php echo date(
-                    'Y-m-d',
-                ); ?>" class="p-2 border rounded"/>
-            </div>
+                    <!-- Date -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="date" class="text-left">Date:</label>
+                        <input type="date" id="date" name="date" value="<?php echo date(
+                            'Y-m-d',
+                        ); ?>" class="p-2 border rounded"/>
+                    </div>
 
-            <!-- Account -->
-            <div class="flex flex-col space-y-2">
-                <label for="account" class="text-left">Account:</label>
-                <select name="account" id="account" class="p-2 border rounded">
-                    <option value="select" disabled selected>Select Account</option>
-                    <option value="tiaa">TIAA</option>
-                    <option value="schwab">Schwab</option>
-                    <option value="fidelity">Fidelity</option>
-                    <option value="vanguard">Vanguard</option>
-                    <option value="robinhood">Robinhood</option>
-                </select>
-            </div>
+                    <!-- Account -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="account" class="text-left">Account:</label>
+                        <select name="account" id="account" class="p-2 border rounded">
+                            <option value="select" disabled selected>Select Account</option>
+                            <option value="tiaa">TIAA</option>
+                            <option value="schwab">Schwab</option>
+                            <option value="fidelity">Fidelity</option>
+                            <option value="vanguard">Vanguard</option>
+                            <option value="robinhood">Robinhood</option>
+                        </select>
+                    </div>
 
-            <!-- Account Type -->
-            <div class="flex flex-col space-y-2">
-                <label for="account_type" class="text-left">Account Type:</label>
-                <select name="account_type" id="account_type" class="p-2 border rounded">
-                    <option value="select" disabled selected>Select Account Type</option>
-                    <option value="retirement-403b">Retirement - 403b</option>
-                    <option value="retirement-401a">Retirement - 401a</option>
-                    <option value="retirement-roth-ira">Retirement - Roth IRA</option>
-                    <option value="retirement-traditional-ira">Retirement - Traditional IRA</option>
-                    <option value="business-taxable-brokerage">Business - Taxable Brokerage</option>
-                    <option value="529-college-fund">529 College Fund</option>
-                    <option value="taxable-brokerage">Taxable Brokerage</option>
-                </select>
-            </div>
+                    <!-- Account Type -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="account_type" class="text-left">Account Type:</label>
+                        <select name="account_type" id="account_type" class="p-2 border rounded">
+                            <option value="select" disabled selected>Select Account Type</option>
+                            <option value="retirement-403b">Retirement - 403b</option>
+                            <option value="retirement-401a">Retirement - 401a</option>
+                            <option value="retirement-roth-ira">Retirement - Roth IRA</option>
+                            <option value="retirement-traditional-ira">Retirement - Traditional IRA</option>
+                            <option value="business-taxable-brokerage">Business - Taxable Brokerage</option>
+                            <option value="529-college-fund">529 College Fund</option>
+                            <option value="taxable-brokerage">Taxable Brokerage</option>
+                        </select>
+                    </div>
 
-            <!-- Investment Type -->
-            <div class="flex flex-col space-y-2">
-                <label for="asset_class" class="text-left">Asset Class:</label>
-                <select name="asset_class" id="asset_class" class="p-2 border rounded">
-                    <option value="select" disabled selected>Select Asset Class</option>
-                    <option value="mutual-fund">Mutual Fund</option>
-                    <option value="equities">Equities</option>
-                    <option value="crypto">Crypto</option>
-                </select>
-            </div>
+                    <!-- Investment Type -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="asset_class" class="text-left">Asset Class:</label>
+                        <select name="asset_class" id="asset_class" class="p-2 border rounded">
+                            <option value="select" disabled selected>Select Asset Class</option>
+                            <option value="mutual-fund">Mutual Fund</option>
+                            <option value="equities">Equities</option>
+                            <option value="crypto">Crypto</option>
+                        </select>
+                    </div>
 
+                </div>
+                    <!-- Amount -->
+                    <div class="flex flex-col space-y-2 mx-auto">
+                        <label for="amount" class="text-center">Amount:</label>
+                        <input type="number" id="amount" name="amount" class="p-2 border rounded"/>
+                    </div>
+
+                <button type="submit" class="mx-auto bg-purple-400 w-full text-black py-2 px-4 rounded hover:bg-purple-500">
+                    Submit
+                </button>
+            </form>
         </div>
-            <!-- Amount -->
-            <div class="flex flex-col space-y-2 mx-auto">
-                <label for="amount" class="text-center">Amount:</label>
-                <input type="number" id="amount" name="amount" class="p-2 border rounded"/>
-            </div>
-
-        <button type="submit" class="mx-auto bg-purple-400 w-full text-black py-2 px-4 rounded hover:bg-purple-500">
-            Submit
-        </button>
-    </form>
-</div>
     </div>
 
     <?php if (isset($_GET['status'])): ?>
