@@ -34,13 +34,18 @@ try {
     $total = 0;
 }
 
-function formatAccount($account) {
+// The following function uses type declaration ': string'
+// The function will throw an error if a string is not returned
+// This improves code documentation, better IDE support and type safety
+function formatAccount($account): string
+{
     // ucfirst() is Uppercase First
     return $account === 'tiaa' ? 'TIAA' : ucfirst($account);
 }
 
-function formatAccountType($type) {
-    // Split by dash and capitalize each word
+function formatAccountType($type): string
+{
+    // Split by dash, capitalize each word, implode with '-'
     $words = explode('-', $type);
     $words = array_map(function ($word) {
         return ucfirst($word);
@@ -55,8 +60,9 @@ function formatAccountType($type) {
     return implode(' - ', $words);
 }
 
-function formatInvestmentType($type) {
-    // Split by dash and capitalize each word
+function formatInvestmentType($type): string
+{
+    // Split by dash, capitalize each word, implode with ' '
     $words = explode('-', $type);
     $words = array_map(function ($word) {
         return ucfirst($word);
@@ -80,18 +86,22 @@ function formatInvestmentType($type) {
         <tbody>
         <?php foreach ($transactions as $transaction): ?>
         <tr>
-            <td class="p-2"><?php echo date('m/d/Y', strtotime($transaction['date'])); ?></td>
+            <!-- $transaction['date'] returns '2024-10-31' -->
+            <!-- strtotime() converts it to a timestamp (like 1698710400) -->
+            <!-- date() formats it -->
+            <td class="p-2"><?php echo date('m/d/y', strtotime($transaction['date'])); ?></td>
+            <!-- always use htmlspecialchars() when outputting user-provided data to prevent xss attacks -->
             <td class="p-2"><?php echo htmlspecialchars(formatAccount($transaction['account'])); ?></td>
             <td class="p-2"><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
             <td class="p-2"><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
-            <td class="p-2">$<?php echo number_format($transaction['amount'], 2); ?></td>
+            <td class="p-2">$<?php echo number_format($transaction['amount'], 0); ?></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
         <tfoot class="border-2 border-black">
         <tr>
             <td colspan="4">Total Contributions</td>
-            <td>$<?php echo number_format($total, 2); ?></td>
+            <td>$<?php echo number_format($total, 0); ?></td>
         </tr>
         </tfoot>
     </table>
