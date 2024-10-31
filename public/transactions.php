@@ -100,12 +100,25 @@ function formatInvestmentType($type): string {
             <td><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
             <td><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
             <td>$<?php echo number_format($transaction['amount']); ?></td>
-            <td class="p-0"><a href="/php-proj/public/edit.php?id=<?php echo $transaction[
-                'id'
-            ]; ?>" class="border border-purple-400 p-1 rounded">Edit</a></td>
-            <td class="p-0"><a href="/php-proj/public/delete.php?id=<?php echo $transaction[
-                'id'
-                ]; ?>" class="border border-purple-400 p-1 rounded">Delete</a></td>
+            <td class="p-0">
+                <form action="/php-proj/public/edit.php" method="get">
+                    <input type="hidden" name="id" value="<?php echo $transaction['id']; ?>">
+                    <button type="submit"
+                            class="border border-purple-400 p-1 rounded hover:bg-purple-200">
+                        Edit
+                    </button>
+                </form>
+            </td>
+            <td class="p-0">
+                <form action="/php-proj/public/delete.php" method="post">
+                    <input type="hidden" name="id" value="<?php echo $transaction['id']; ?>">
+                    <button type="submit"
+                            class="border border-purple-400 p-1 rounded hover:bg-purple-200"
+                            onclick="return confirm('Are you sure you want to delete this transaction? This action cannot be undone.');">
+                        Delete
+                    </button>
+                </form>
+            </td>
         </tr>
         <?php endforeach; ?>
         </tbody>
