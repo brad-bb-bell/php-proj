@@ -100,9 +100,12 @@ function formatInvestmentType($type): string {
             <td><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
             <td><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
             <td>$<?php echo number_format($transaction['amount']); ?></td>
-            <td><a href="/php-proj/public/edit.php?id=<?php echo $transaction[
+            <td class="p-0"><a href="/php-proj/public/edit.php?id=<?php echo $transaction[
                 'id'
             ]; ?>" class="border border-purple-400 p-1 rounded">Edit</a></td>
+            <td class="p-0"><a href="/php-proj/public/delete.php?id=<?php echo $transaction[
+                'id'
+                ]; ?>" class="border border-purple-400 p-1 rounded">Delete</a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
@@ -117,11 +120,19 @@ function formatInvestmentType($type): string {
     <?php if (isset($_GET['status'])): ?>
         <?php if ($_GET['status'] === 'success'): ?>
             <div class="bg-green-100 mx-auto max-w-lg border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
-                Transaction successfully updated!
+                Transaction successfully updated.
+            </div>
+        <?php elseif ($_GET['status'] === 'deleted'): ?>
+            <div class="bg-green-100 mx-auto max-w-lg border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
+                Transaction successfully deleted.
             </div>
         <?php elseif ($_GET['status'] === 'error'): ?>
             <div class="bg-red-100 mx-auto max-w-lg border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
                 Error updating transaction. Please try again.
+            </div>
+        <?php elseif ($_GET['status'] === 'failed'): ?>
+            <div class="bg-red-100 mx-auto max-w-lg border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
+                Error deleting transaction. Please try again.
             </div>
         <?php endif; ?>
     <?php endif; ?>
