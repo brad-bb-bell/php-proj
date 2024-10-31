@@ -151,22 +151,22 @@ try {
     <div class="grid grid-cols-2 gap-4 mb-8">
         <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Retirement Accounts</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['retirementTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['retirementTotal'], 0); ?></p>
             <p class="text-sm text-gray-600 mt-2">Includes 403b, 401a, Roth IRA, and Traditional IRA</p>
         </div>
         <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Business Accounts</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['businessTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['businessTotal'], 0); ?></p>
             <p class="text-sm text-gray-600 mt-2">Business Taxable Brokerage</p>
         </div>
         <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">College Savings</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['collegeTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['collegeTotal'], 0); ?></p>
             <p class="text-sm text-gray-600 mt-2">529 College Fund</p>
         </div>
         <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Personal Brokerage</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['brokerageTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['accountTypes']['brokerageTotal'], 0); ?></p>
             <p class="text-sm text-gray-600 mt-2">Personal Taxable Brokerage</p>
         </div>
     </div>
@@ -176,15 +176,15 @@ try {
     <div class="grid grid-cols-3 gap-4 mb-6">
         <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Mutual Funds</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['assetClasses']['mutualFundTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['assetClasses']['mutualFundTotal'], 0); ?></p>
         </div>
         <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Equities</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['assetClasses']['equitiesTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['assetClasses']['equitiesTotal'], 0); ?></p>
         </div>
         <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Crypto</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['assetClasses']['cryptoTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['assetClasses']['cryptoTotal'], 0); ?></p>
         </div>
     </div>
 
@@ -193,23 +193,23 @@ try {
         <div class="grid grid-cols-3 gap-4 mb-6">
             <div class="bg-purple-200 p-4 rounded">
                 <h2 class="text-lg font-semibold mb-2">TIAA</h2>
-                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['tiaaTotal'], 2); ?></p>
+                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['tiaaTotal'], 0); ?></p>
             </div>
             <div class="bg-purple-200 p-4 rounded">
                 <h2 class="text-lg font-semibold mb-2">Schwab</h2>
-                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['schwabTotal'], 2); ?></p>
+                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['schwabTotal'], 0); ?></p>
             </div>
             <div class="bg-purple-200 p-4 rounded">
                 <h2 class="text-lg font-semibold mb-2">Fidelity</h2>
-                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['fidelityTotal'], 2); ?></p>
+                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['fidelityTotal'], 0); ?></p>
             </div>
             <div class="bg-purple-200 p-4 rounded">
                 <h2 class="text-lg font-semibold mb-2">Vanguard</h2>
-                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['vanguardTotal'], 2); ?></p>
+                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['vanguardTotal'], 0); ?></p>
             </div>
             <div class="bg-purple-200 p-4 rounded">
                 <h2 class="text-lg font-semibold mb-2">Robinhood</h2>
-                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['robinhoodTotal'], 2); ?></p>
+                <p class="text-2xl">$<?php echo number_format($summaries['accounts']['robinhoodTotal'], 0); ?></p>
             </div>
         </div>
     </div>
