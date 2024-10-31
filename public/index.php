@@ -90,15 +90,15 @@ try {
 
 <div class="max-w-screen-lg mx-auto">
     <div class="grid grid-cols-3 gap-4 mb-6">
-        <div class="bg-purple-200 p-4 rounded shadow">
+        <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Contributions This Year</h2>
             <p class="text-2xl">$<?php echo number_format($summaries['yearTotal'], 0); ?></p>
         </div>
-        <div class="bg-purple-200 p-4 rounded shadow">
+        <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Contributions This Month</h2>
             <p class="text-2xl">$<?php echo number_format($summaries['monthTotal'], 0); ?></p>
         </div>
-        <div class="bg-purple-200 p-4 rounded shadow">
+        <div class="bg-purple-200 p-4 rounded">
             <h2 class="text-lg font-semibold mb-2">Contributions Last Month</h2>
             <p class="text-2xl">$<?php echo number_format($summaries['lastMonthTotal'], 0); ?></p>
         </div>
