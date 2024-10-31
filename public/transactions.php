@@ -44,6 +44,14 @@ function formatAccount($account): string {
 
 function formatAccountType($type): string {
     // Split by dash, capitalize each word, implode with '-'
+
+    if ($type === 'business-taxable-brokerage') {
+        return 'Business - Taxable Brokerage';
+    }
+    if ($type === '529-college-fund') {
+        return '529 College Fund';
+    }
+
     $words = explode('-', $type);
     $words = array_map(function ($word) {
         return ucfirst($word);
