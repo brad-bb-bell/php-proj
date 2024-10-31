@@ -89,12 +89,13 @@ function formatInvestmentType($type): string
             <!-- $transaction['date'] returns '2024-10-31' -->
             <!-- strtotime() converts it to a timestamp (like 1698710400) -->
             <!-- date() formats it -->
-            <td class="p-2"><?php echo date('m/d/y', strtotime($transaction['date'])); ?></td>
+            <td><?php echo date('m/d/y', strtotime($transaction['date'])); ?></td>
             <!-- always use htmlspecialchars() when outputting user-provided data to prevent xss attacks -->
-            <td class="p-2"><?php echo htmlspecialchars(formatAccount($transaction['account'])); ?></td>
-            <td class="p-2"><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
-            <td class="p-2"><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
-            <td class="p-2">$<?php echo number_format($transaction['amount']); ?></td>
+            <td><?php echo htmlspecialchars(formatAccount($transaction['account'])); ?></td>
+            <td><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
+            <td><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
+            <td>$<?php echo number_format($transaction['amount']); ?></td>
+            <td><a href="/transactions/:id">Edit</a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
