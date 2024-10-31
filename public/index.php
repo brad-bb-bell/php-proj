@@ -28,11 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $stmt->execute();
 
+        // redirect
         header('Location: ./?status=success');
         exit();
     } catch (PDOException $e) {
         // Encoding the error message in URL params doesn't seem like the best practice
         // header('Location: ./?status=error' . urlencode($e->getMessage()));
+        
+        // redirect
         header('Location: ./?status=error');
         exit();
     }
@@ -106,6 +109,7 @@ try {
 <div class=" mx-auto p-6 bg-purple-200 rounded-b-xl">
     <form action="index.php" method="post" class="grid gap-6">
         <div class="grid grid-cols-2 items-center gap-4">
+
             <!-- Date -->
             <div class="flex flex-col space-y-2">
                 <label for="date" class="text-left">Date:</label>
@@ -172,9 +176,7 @@ try {
             <div class="bg-green-100 mx-auto max-w-lg border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
                 Transaction saved successfully!
             </div>
-        <?php //echo htmlspecialchars($_GET['message']);
-            //echo htmlspecialchars($_GET['message']);
-            elseif ($_GET['status'] === 'error'): ?>
+        <?php elseif ($_GET['status'] === 'error'): ?>
             <div class="bg-red-100 mx-auto max-w-lg border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
                 <!-- Error saving transaction: --><?php
             //echo htmlspecialchars($_GET['message']);
