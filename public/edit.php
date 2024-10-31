@@ -6,6 +6,31 @@ $username = "root";
 $password = "";
 $dbname = "contributions";
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    try {
+        $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "UPDATE Transactions SET date = :date, account = :account, account_type = :account_type, asset_class = :asset_class, amount = :amount WHERE id = :id";
+        $stmt = $database->prepare($sql);
+
+        $stmt->bindParam(':date', $_POST['date']);
+        $stmt->bindParam(':account', $_POST['account']);
+        $stmt->bindParam(':account_type', $_POST['account_type']);
+        $stmt->bindParam(':asset_class', $_POST['asset_class']);
+        $stmt->bindParam(':amount', $_POST['amount']);
+        $stmt->bindParam(':id', $_POST['id']);
+
+        $stmt->execute();
+
+        header('Location: ./transactions.php?status=success');
+        exit();
+    } catch(PDOException $e) {
+        header('Location: ./transactions.php?status=error');
+        exit();
+    }
+}
+
 if (isset($_GET['id'])) {
     $id = (int)$_GET['id'];
 } else {
@@ -35,6 +60,8 @@ try {
         <div class=" mx-auto p-6 bg-purple-200 rounded-b-xl">
             <form action="edit.php" method="post" class="grid gap-6">
                 <div class="grid grid-cols-2 items-center gap-4">
+
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($transaction['id']); ?>">
 
                     <!-- Date -->
                     <div class="flex flex-col space-y-2">
@@ -94,6 +121,7 @@ try {
             </form>
         </div>
     </div>
+
 </div>
 
 <?php require_once '../includes/footer.php'; ?>

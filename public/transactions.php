@@ -37,14 +37,12 @@ try {
 // The following function uses type declaration ': string'
 // The function will throw an error if a string is not returned
 // This improves code documentation, better IDE support and type safety
-function formatAccount($account): string
-{
+function formatAccount($account): string {
     // ucfirst() is Uppercase First
     return $account === 'tiaa' ? 'TIAA' : ucfirst($account);
 }
 
-function formatAccountType($type): string
-{
+function formatAccountType($type): string {
     // Split by dash, capitalize each word, implode with '-'
     $words = explode('-', $type);
     $words = array_map(function ($word) {
@@ -60,8 +58,7 @@ function formatAccountType($type): string
     return implode(' - ', $words);
 }
 
-function formatInvestmentType($type): string
-{
+function formatInvestmentType($type): string {
     // Split by dash, capitalize each word, implode with ' '
     $words = explode('-', $type);
     $words = array_map(function ($word) {
@@ -73,7 +70,7 @@ function formatInvestmentType($type): string
 ?>
 
     <div class="max-w-screen-lg mx-auto">
-    <table class="border-2 border-black w-full bg-purple-200 text-black rounded">
+    <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
         <thead class="border-2 border-black">
         <tr>
             <th>Date</th>
@@ -95,7 +92,9 @@ function formatInvestmentType($type): string
             <td><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
             <td><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
             <td>$<?php echo number_format($transaction['amount']); ?></td>
-            <td><a href="/php-proj/public/edit.php?id=<?php echo $transaction['id']; ?>" class="border border-purple-400 p-1 rounded">Edit</a></td>
+            <td><a href="/php-proj/public/edit.php?id=<?php echo $transaction[
+                'id'
+            ]; ?>" class="border border-purple-400 p-1 rounded">Edit</a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
@@ -106,5 +105,18 @@ function formatInvestmentType($type): string
         </tr>
         </tfoot>
     </table>
+        
+    <?php if (isset($_GET['status'])): ?>
+        <?php if ($_GET['status'] === 'success'): ?>
+            <div class="bg-green-100 mx-auto max-w-lg border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
+                Transaction successfully updated!
+            </div>
+        <?php elseif ($_GET['status'] === 'error'): ?>
+            <div class="bg-red-100 mx-auto max-w-lg border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
+                Error updating transaction. Please try again.
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+
     </div>
 <?php require_once '../includes/footer.php'; ?>
