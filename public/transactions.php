@@ -104,7 +104,7 @@ function formatInvestmentType($type): string {
                 <form action="/php-proj/public/edit.php" method="get">
                     <input type="hidden" name="id" value="<?php echo $transaction['id']; ?>">
                     <button type="submit"
-                            class="border border-purple-400 p-1 rounded hover:bg-purple-200">
+                            class="border border-purple-400 px-1 py-0.5 rounded hover:bg-purple-300">
                         Edit
                     </button>
                 </form>
@@ -113,7 +113,7 @@ function formatInvestmentType($type): string {
                 <form action="/php-proj/public/delete.php" method="post">
                     <input type="hidden" name="id" value="<?php echo $transaction['id']; ?>">
                     <button type="submit"
-                            class="border border-purple-400 p-1 rounded hover:bg-purple-200"
+                            class="border border-purple-400 px-1 py-0.5 rounded hover:bg-purple-300"
                             onclick="return confirm('Are you sure you want to delete this transaction? This action cannot be undone.');">
                         Delete
                     </button>
