@@ -1,52 +1,55 @@
 <?php
 require_once '../includes/header.php';
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "contributions";
+$servername = 'localhost';
+$username = 'root';
+$password = '';
+$dbname = 'contributions';
 
 try {
     $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC";
+    $query = 'SELECT date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC';
 
     // WHY NOT $database->prepare($query)
     $stmt = $database->query($query);
+    // query() is used for direct, simple SQL queries that don't have any user input or variables
+    // prepare() is used when you have params/variables in your query that need to be safely inserted
 
     // WHY NOT THIS? $transactions = $stmt->execute();
     $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // execute() just runs the query but doesn't return the results
+    // fetch() or fetchALL() actually retrieves the data
+    // $stmt->execute() would just return TRUE or FALSE
 
-    $totalQuery = "SELECT SUM(amount) as total FROM Transactions";
+    // The FETCH_ASSOC part tells PDO to return the results as an associative array where you can access columns by name like $transaction['date'] instead of numeric indices.
+
+    $totalQuery = 'SELECT SUM(amount) as total FROM Transactions';
     $totalStmt = $database->query($totalQuery);
     $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo 'Error: ' . $e->getMessage();
     $transactions = [];
     $total = 0;
 }
 
-// Helper functions for formatting
 function formatAccount($account) {
-    return $account === 'tiaa'
-        ? 'TIAA'
-        : ucfirst($account);
+    // ucfirst() is Uppercase First
+    return $account === 'tiaa' ? 'TIAA' : ucfirst($account);
 }
 
 function formatAccountType($type) {
     // Split by dash and capitalize each word
     $words = explode('-', $type);
-    $words = array_map(function($word) {
+    $words = array_map(function ($word) {
         return ucfirst($word);
     }, $words);
 
-    // Special handling for specific acronyms
-    $words = array_map(function($word) {
+    // Special handling for 'ira'
+    $words = array_map(function ($word) {
         $acronyms = ['ira'];
-        return in_array(strtolower($word), $acronyms)
-            ? strtoupper($word)
-            : $word;
+        return in_array(strtolower($word), $acronyms) ? strtoupper($word) : $word;
     }, $words);
 
     return implode(' - ', $words);
@@ -55,7 +58,7 @@ function formatAccountType($type) {
 function formatInvestmentType($type) {
     // Split by dash and capitalize each word
     $words = explode('-', $type);
-    $words = array_map(function($word) {
+    $words = array_map(function ($word) {
         return ucfirst($word);
     }, $words);
 
@@ -75,7 +78,7 @@ function formatInvestmentType($type) {
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($transactions as $transaction) : ?>
+        <?php foreach ($transactions as $transaction): ?>
         <tr>
             <td class="p-2"><?php echo date('m/d/Y', strtotime($transaction['date'])); ?></td>
             <td class="p-2"><?php echo htmlspecialchars(formatAccount($transaction['account'])); ?></td>
