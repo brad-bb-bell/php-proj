@@ -94,14 +94,14 @@ function formatInvestmentType($type): string
             <td class="p-2"><?php echo htmlspecialchars(formatAccount($transaction['account'])); ?></td>
             <td class="p-2"><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
             <td class="p-2"><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
-            <td class="p-2">$<?php echo number_format($transaction['amount'], 0); ?></td>
+            <td class="p-2">$<?php echo number_format($transaction['amount']); ?></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
         <tfoot class="border-2 border-black">
         <tr>
             <td colspan="4">Total Contributions</td>
-            <td>$<?php echo number_format($total, 0); ?></td>
+            <td>$<?php echo number_format($total); ?></td>
         </tr>
         </tfoot>
     </table>
