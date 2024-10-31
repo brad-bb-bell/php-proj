@@ -89,15 +89,15 @@ try {
     <div class="grid grid-cols-3 gap-4 mb-6">
         <div class="bg-purple-200 p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2">Contributions This Year</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['yearTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['yearTotal'], 0); ?></p>
         </div>
         <div class="bg-purple-200 p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2">Contributions This Month</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['monthTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['monthTotal'], 0); ?></p>
         </div>
         <div class="bg-purple-200 p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2">Contributions Last Month</h2>
-            <p class="text-2xl">$<?php echo number_format($summaries['lastMonthTotal'], 2); ?></p>
+            <p class="text-2xl">$<?php echo number_format($summaries['lastMonthTotal'], 0); ?></p>
         </div>
     </div>
 
@@ -118,6 +118,7 @@ try {
             <div class="flex flex-col space-y-2">
                 <label for="account" class="text-left">Account:</label>
                 <select name="account" id="account" class="p-2 border rounded">
+                    <option value="select" disabled selected>Select Account</option>
                     <option value="tiaa">TIAA</option>
                     <option value="schwab">Schwab</option>
                     <option value="fidelity">Fidelity</option>
@@ -130,6 +131,7 @@ try {
             <div class="flex flex-col space-y-2">
                 <label for="account_type" class="text-left">Account Type:</label>
                 <select name="account_type" id="account_type" class="p-2 border rounded">
+                    <option value="select" disabled selected>Select Account Type</option>
                     <option value="retirement-403b">Retirement - 403b</option>
                     <option value="retirement-401a">Retirement - 401a</option>
                     <option value="retirement-roth-ira">Retirement - Roth IRA</option>
@@ -142,8 +144,9 @@ try {
 
             <!-- Investment Type -->
             <div class="flex flex-col space-y-2">
-                <label for="asset_class" class="text-left">Investment Type:</label>
+                <label for="asset_class" class="text-left">Asset Class:</label>
                 <select name="asset_class" id="asset_class" class="p-2 border rounded">
+                    <option value="select" disabled selected>Select Asset Class</option>
                     <option value="mutual-fund">Mutual Fund</option>
                     <option value="equities">Equities</option>
                     <option value="crypto">Crypto</option>
