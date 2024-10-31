@@ -5,7 +5,8 @@ $servername = 'localhost';
 $username = 'root';
 $password = '';
 $dbname = 'contributions';
-function getContributionsSummary($database) {
+function getContributionsSummary($database): array
+{
     try {
         // Account Types
         $retirementQuery = "SELECT SUM(amount) as total FROM Transactions 
@@ -133,6 +134,13 @@ try {
             'mutualFundTotal' => 0,
             'equitiesTotal' => 0,
             'cryptoTotal' => 0,
+        ],
+        'accounts' => [
+            'tiaaTotal' => 0,
+            'schwabTotal' => 0,
+            'fidelityTotal' => 0,
+            'vanguardTotal' => 0,
+            'robinhoodTotal' => 0,
         ],
     ];
 }

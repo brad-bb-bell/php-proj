@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (PDOException $e) {
         // Encoding the error message in URL params doesn't seem like the best practice
         // header('Location: ./?status=error' . urlencode($e->getMessage()));
-        
+
         // redirect
         header('Location: ./?status=error');
         exit();
