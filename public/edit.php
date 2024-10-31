@@ -33,7 +33,7 @@ try {
     <div class="bg-purple-200 max-w-lg rounded-xl mx-auto mb-8">
         <h1 class="text-center text-xl rounded-t-xl border-b border-black py-1">Edit contribution</h1>
         <div class=" mx-auto p-6 bg-purple-200 rounded-b-xl">
-            <form action="edit-transaction.php" method="post" class="grid gap-6">
+            <form action="edit.php" method="post" class="grid gap-6">
                 <div class="grid grid-cols-2 items-center gap-4">
 
                     <!-- Date -->

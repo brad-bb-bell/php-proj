@@ -95,7 +95,7 @@ function formatInvestmentType($type): string
             <td><?php echo htmlspecialchars(formatAccountType($transaction['account_type'])); ?></td>
             <td><?php echo htmlspecialchars(formatInvestmentType($transaction['asset_class'])); ?></td>
             <td>$<?php echo number_format($transaction['amount']); ?></td>
-            <td><a href="/php-proj/public/edit-transaction.php?id=<?php echo $transaction['id']; ?>" class="border border-purple-400 p-1 rounded">Edit</a></td>
+            <td><a href="/php-proj/public/edit.php?id=<?php echo $transaction['id']; ?>" class="border border-purple-400 p-1 rounded">Edit</a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
