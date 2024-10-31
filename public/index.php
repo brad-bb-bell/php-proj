@@ -17,6 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $stmt = $database->prepare($sql);
 
+        // The data comes from the HTML form through the $_POST superglobal in PHP
+        // Each form input has a 'name' attribute that becomes the key in the $_POST array
+
         $stmt->bindParam(':date', $_POST['date']);
         $stmt->bindParam(':account', $_POST['account']);
         $stmt->bindParam(':account_type', $_POST['account_type']);
@@ -28,14 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ./?status=success');
         exit();
     } catch (PDOException $e) {
-        header('Location: ./?status=error&message=' . urlencode($e->getMessage()));
+        // Encoding the error message in URL params doesn't seem like the best practice
+        // header('Location: ./?status=error' . urlencode($e->getMessage()));
+        header('Location: ./?status=error');
         exit();
     }
 }
 
-function getContributionSummaries($database) {
+function getContributionSummaries($database): array {
     try {
-        $yearQuery = "SELECT SUM(amount) as total FROM Transactions WHERE YEAR(date) = YEAR(CURRENT_DATE())";
+        $yearQuery = 'SELECT SUM(amount) as total FROM Transactions WHERE YEAR(date) = YEAR(CURRENT_DATE())';
         $yearStmt = $database->query($yearQuery);
         $yearTotal = $yearStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
@@ -56,7 +61,7 @@ function getContributionSummaries($database) {
             'monthTotal' => $monthTotal,
             'lastMonthTotal' => $lastMonthTotal,
         ];
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         echo $e->getMessage();
         return [
             'yearTotal' => 0,
@@ -70,11 +75,11 @@ try {
     $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $summaries = getContributionSummaries($database);
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     $summaries = [
         'yearTotal' => 0,
         'monthTotal' => 0,
-        'lastMonthTotal' => 0
+        'lastMonthTotal' => 0,
     ];
     error_log($e->getMessage());
 }
@@ -164,9 +169,14 @@ try {
             <div class="bg-green-100 mx-auto max-w-lg border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
                 Transaction saved successfully!
             </div>
-        <?php elseif ($_GET['status'] === 'error'): ?>
+        <?php //echo htmlspecialchars($_GET['message']);
+            //echo htmlspecialchars($_GET['message']);
+            elseif ($_GET['status'] === 'error'): ?>
             <div class="bg-red-100 mx-auto max-w-lg border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
-                Error saving transaction: <?php echo htmlspecialchars($_GET['message']); ?>
+                <!-- Error saving transaction: --><?php
+            //echo htmlspecialchars($_GET['message']);
+            ?>
+                Error saving transaction. Please try again.
             </div>
         <?php endif; ?>
     <?php endif; ?>
