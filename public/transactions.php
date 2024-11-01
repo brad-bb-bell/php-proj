@@ -18,7 +18,7 @@ try {
     $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // build the base query
-    $baseQuery = "SELECT id, date, accoutn, account_type, asset_class, amount FROM Transactions WHERE date BETWEEN :date_from AND :date_to";
+    $baseQuery = "SELECT id, date, account, account_type, asset_class, amount FROM Transactions WHERE date BETWEEN :date_from AND :date_to";
     // add sorting
     $baseQuery .= " ORDER BY $sortby $order";
 
@@ -84,6 +84,13 @@ try {
 // The following function uses type declaration ': string'
 // The function will throw an error if a string is not returned
 // This improves code documentation, better IDE support and type safety
+
+function buildUrl($params = []) {
+    $currentParams = $_GET;
+    $newParams = array_merge($currentParams, $params);
+    return '?' . http_build_query($newParams);
+}
+
 function formatAccount($account): string {
     // ucfirst() is Uppercase First
     return $account === 'tiaa' ? 'TIAA' : ucfirst($account);
@@ -124,38 +131,44 @@ function formatInvestmentType($type): string {
 }
 ?>
 
-
-
     <div class="max-w-screen-lg mx-auto ">
         <h1 class="text-2xl font-bold mb-4 text-center text-purple-50">Transactions</h1>
-        <div class="grid grid-cols-3 gap-4 mb-8 mx-auto w-2/3">
+
+        <form action="" method="get" class="grid grid-cols-3 gap-4 mb-8 mx-auto w-2/3">
+            <!-- Preserve sorting parameters if they exist -->
+            <?php if (isset($_GET['sortby'])): ?>
+                <input type="hidden" name="sortby" value="<?php echo htmlspecialchars($_GET['sortby']); ?>">
+                <input type="hidden" name="order" value="<?php echo htmlspecialchars($_GET['order']); ?>">
+            <?php endif; ?>
+
             <div class="flex flex-col space-y-2">
-                <label for="items-per-page" class="text-left text-purple-50">Transactions per page:</label>
-                <select name="items-per-page" id="items-per-page" class="h-10 p-2 border rounded">
+                <label for="items" class="text-left text-purple-50">Transactions per page:</label>
+                <select name="items" id="items" class="h-10 p-2 border rounded" onchange="this.form.submit()">
                     <option value="select" disabled selected>Items Per Page</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="ALL">ALL</option>
+                    <option value="10" <?php echo $itemsPerPage === '10' ? 'selected' : ''; ?>>10</option>
+                    <option value="20" <?php echo $itemsPerPage === '20' ? 'selected' : ''; ?>>20</option>
+                    <option value="50" <?php echo $itemsPerPage === '50' ? 'selected' : ''; ?>>50</option>
+                    <option value="ALL" <?php echo $itemsPerPage === 'ALL' ? 'selected' : ''; ?>>ALL</option>
                 </select>
             </div>
             <div class="flex flex-col space-y-2 ">
-                <label for="date-from" class="text-left text-purple-50">From:</label>
-                <input type="date" id="date-from" name="from" value="2024-01-01" class="h-10 p-2 border rounded"/>
+                <label for="date_from" class="text-left text-purple-50">From:</label>
+                <input type="date" id="date_from" name="date_from" value="<?php echo htmlspecialchars($dateFrom); ?>" class="h-10 p-2 border rounded" onchange="this.form.submit()" />
             </div>
             <div class="flex flex-col space-y-2">
-                <label for="date-from" class="text-left text-purple-50">To:</label>
-                <input type="date" id="date-from" name="from" value="<?php echo date(
-                    'Y-m-d',
-                ); ?>" class="h-10 p-2 border rounded"/>
+                <label for="date_to" class="text-left text-purple-50">To:</label>
+                <input type="date" id="date_to" name="date_to" value="<?php echo htmlspecialchars($dateTo); ?>" class="h-10 p-2 border rounded" onchange="this.form.submit()" />
             </div>
-        </div>
+        </form>
 
         <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
             <thead class="border-2 border-black">
             <form action="/php-proj/public/transactions.php" method="get">
-                <!-- Single set of hidden inputs at the form level -->
-                <input type="hidden" name="sortby" value="">
+                <input type="hidden" name="items" value="<?php echo htmlspecialchars($itemsPerPage); ?>">
+                <input type="hidden" name="date_from" value="<?php echo htmlspecialchars($dateFrom); ?>">
+                <input type="hidden" name="date_to" value="<?php echo htmlspecialchars($dateTo); ?>">
+                <input type="hidden" name="page" value="1">  <!-- Reset to first page on sort -->
+                <input type="hidden" name="sortby" value="<?php echo htmlspecialchars($sortby); ?>">
                 <input type="hidden" name="order" value="<?php echo isset($_GET['order']) && $_GET['order'] === 'asc'
                     ? 'desc'
                     : 'asc'; ?>">
@@ -228,9 +241,35 @@ function formatInvestmentType($type): string {
         <tr>
             <td colspan="4">Total Contributions</td>
             <td>$<?php echo number_format($total); ?></td>
+            <td colspan="2"></td>
         </tr>
         </tfoot>
     </table>
+
+    <?php if ($itemsPerPage !== 'ALL' && $totalPages > 1): ?>
+        <div class="flex justify-center space-x-2 mt-4">
+            <?php if ($currentPage > 1): ?>
+                <a href="<?php echo buildUrl(['page' => $currentPage - 1]); ?>"
+                   class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+                    Previous
+                </a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="<?php echo buildUrl(['page' => $i]); ?>"
+                   class="px-4 py-2 <?php echo $i === $currentPage ? 'bg-purple-700' : 'bg-purple-500'; ?> text-white rounded hover:bg-purple-600">
+                    <?php echo $i; ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($currentPage < $totalPages): ?>
+                <a href="<?php echo buildUrl(['page' => $currentPage + 1]); ?>"
+                   class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+                    Next
+                </a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
         
     <?php if (isset($_GET['status'])): ?>
         <?php if ($_GET['status'] === 'success'): ?>
