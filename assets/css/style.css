@@ -626,6 +626,10 @@ td {
   margin-top: 0.5rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -636,6 +640,10 @@ td {
 
 .flex {
   display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
 }
 
 .table {
@@ -654,12 +662,24 @@ td {
   display: none;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
 .min-h-\[calc\(100dvh-7rem\)\] {
   min-height: calc(100dvh - 7rem);
 }
 
 .w-full {
   width: 100%;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-3 {
+  width: 0.75rem;
 }
 
 .max-w-lg {
@@ -694,12 +714,20 @@ td {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .flex-col {
   flex-direction: column;
 }
 
 .items-center {
   align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
 }
 
 .gap-4 {

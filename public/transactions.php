@@ -81,11 +81,13 @@ function formatInvestmentType($type): string {
     <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
         <thead class="border-2 border-black">
         <tr>
-            <th>Date</th>
-            <th>Account</th>
-            <th>Account Type</th>
-            <th>Investment Type</th>
-            <th>Amount</th>
+            <th><span class="inline-flex items-center">Date <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
+            <th><span class="inline-flex items-center">Account <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
+            <th><span class="inline-flex items-center">Account Type <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
+            <th><span class="inline-flex items-center">Investment Type <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
+            <th><span class="inline-flex items-center">Amount <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
