@@ -90,7 +90,7 @@ function formatInvestmentType($type): string {
         </thead>
         <tbody>
         <?php foreach ($transactions as $transaction): ?>
-        <tr>
+        <tr class="odd:bg-purple-100">
             <!-- $transaction['date'] returns '2024-10-31' -->
             <!-- strtotime() converts it to a timestamp (like 1698710400) -->
             <!-- date() formats it -->
