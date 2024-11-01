@@ -6,70 +6,81 @@ $username = 'root';
 $password = '';
 $dbname = 'contributions';
 
-$sortby = null;
-$order = null;
+// Get filter parameters with defaults
+$sortby = $_GET['sortby'] ?? 'date';
+$order = $_GET['order'] ?? 'desc';
+$itemsPerPage = $_GET['items'] ?? '10';
+$dateFrom = $_GET['date_from'] ?? date('Y-m-d', strtotime('-1 year'));
+$dateTo = $_GET['date_to'] ?? date('Y-m-d');
+$currentPage = max(1, $_GET['page'] ?? 1);
 
-if (isset($_GET['sortby'])) {
-    $sortby = $_GET['sortby'];
-    if (isset($_GET['order'])) {
-        $order = $_GET['order'];
+try {
+    $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // build the base query
+    $baseQuery = "SELECT id, date, accoutn, account_type, asset_class, amount FROM Transactions WHERE date BETWEEN :date_from AND :date_to";
+    // add sorting
+    $baseQuery .= " ORDER BY $sortby $order";
+
+    // first get the total count for pagination
+    $countQuery = str_replace("id, date, account, account_type, asset_class, amount", "COUNT(*) as count", $baseQuery);
+    $countStmt = $database->prepare($countQuery);
+    $countStmt->execute([
+        ':date_from' => $dateFrom,
+        ':date_to' => $dateTo
+    ]);
+    $totalCount = $countStmt->fetch(PDO::FETCH_ASSOC)['count'];
+
+    // calculate pagination
+    $itemsPerPage = $itemsPerPage === 'ALL' ? $totalCount : (int)$itemsPerPage;
+    $totalPages = ceil($totalCount / $itemsPerPage);
+    $offset = ($currentPage - 1) * $itemsPerPage;
+
+    // add pagination to query if not showing all
+    if ($itemsPerPage !== $totalCount) {
+        $baseQuery .= " LIMIT :limit OFFSET :offset";
     }
-    try {
-        $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = "SELECT id, date, account, account_type, asset_class, amount FROM Transactions ORDER BY $sortby $order";
-
-        // WHY NOT $database->prepare($query)
-        $stmt = $database->query($query);
-        // query() is used for direct, simple SQL queries that don't have any user input or variables
-        // prepare() is used when you have params/variables in your query that need to be safely inserted
-
-        // WHY NOT THIS? $transactions = $stmt->execute();
-        $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // execute() just runs the query but doesn't return the results
-        // fetch() or fetchALL() actually retrieves the data
-        // $stmt->execute() would just return TRUE or FALSE
-
-        // The FETCH_ASSOC part tells PDO to return the results as an associative array where you can access columns by name like $transaction['date'] instead of numeric indices.
-
-        $totalQuery = 'SELECT SUM(amount) as total FROM Transactions';
-        $totalStmt = $database->query($totalQuery);
-        $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
-    } catch (PDOException $e) {
-        echo 'Error: ' . $e->getMessage();
-        $transactions = [];
-        $total = 0;
+    // prepare and execute main query
+    $stmt = $database->prepare($baseQuery);
+    $stmt->bindParam(':date_from', $dateFrom);
+    $stmt->bindParam(':date_to', $dateTo);
+    if ($itemsPerPage !== $totalCount) {
+        $stmt->bindParam(':limit', $itemsPerPage, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     }
-} else {
-    try {
-        $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt->execute();
+    $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $query = 'SELECT id, date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC';
+    // get the total amount for filtered results
+    $totalQuery = "SELECT SUM(amount) as total FROM Transactions WHERE date BETWEEN :date_from AND :date_to";
+    $totalStmt = $database->prepare($totalQuery);
+    $totalStmt->execute([
+        ':date_from' => $dateFrom,
+        ':date_to' => $dateTo
+    ]);
+    $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
 
-        // WHY NOT $database->prepare($query)
-        $stmt = $database->query($query);
-        // query() is used for direct, simple SQL queries that don't have any user input or variables
-        // prepare() is used when you have params/variables in your query that need to be safely inserted
-
-        // WHY NOT THIS? $transactions = $stmt->execute();
-        $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // execute() just runs the query but doesn't return the results
-        // fetch() or fetchALL() actually retrieves the data
-        // $stmt->execute() would just return TRUE or FALSE
-
-        // The FETCH_ASSOC part tells PDO to return the results as an associative array where you can access columns by name like $transaction['date'] instead of numeric indices.
-
-        $totalQuery = 'SELECT SUM(amount) as total FROM Transactions';
-        $totalStmt = $database->query($totalQuery);
-        $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
-    } catch (PDOException $e) {
-        echo 'Error: ' . $e->getMessage();
-        $transactions = [];
-        $total = 0;
-    }
+} catch (PDOException $e) {
+    echo 'Error: ' . $e->getMessage();
+    $transactions = [];
+    $total = 0;
+    $totalPages = 0;
 }
+// ----------------------------------
+// WHY NOT $database->prepare($query)
+// $stmt = $database->query($query);
+// query() is used for direct, simple SQL queries that don't have any user input or variables
+// prepare() is used when you have params/variables in your query that need to be safely inserted
+
+// WHY NOT THIS? $transactions = $stmt->execute();
+// $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// execute() just runs the query but doesn't return the results
+// fetch() or fetchALL() actually retrieves the data
+// $stmt->execute() would just return TRUE or FALSE
+// The FETCH_ASSOC part tells PDO to return the results as an associative array where you can access columns by name like $transaction['date'] instead of numeric indices.
+// ----------------------------------
+
 // The following function uses type declaration ': string'
 // The function will throw an error if a string is not returned
 // This improves code documentation, better IDE support and type safety
