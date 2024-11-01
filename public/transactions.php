@@ -115,7 +115,31 @@ function formatInvestmentType($type): string {
 
 
 
-    <div class="max-w-screen-lg mx-auto">
+    <div class="max-w-screen-lg mx-auto ">
+        <h1 class="text-2xl font-bold mb-4 text-center text-purple-50">Transactions</h1>
+        <div class="grid grid-cols-3 gap-4 mb-8 mx-auto w-2/3">
+            <div class="flex flex-col space-y-2">
+                <label for="items-per-page" class="text-left text-purple-50">Transactions per page:</label>
+                <select name="items-per-page" id="items-per-page" class="h-10 p-2 border rounded">
+                    <option value="select" disabled selected>Items Per Page</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+            <div class="flex flex-col space-y-2 ">
+                <label for="date-from" class="text-left text-purple-50">From:</label>
+                <input type="date" id="date-from" name="from" value="2024-01-01" class="h-10 p-2 border rounded"/>
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="date-from" class="text-left text-purple-50">To:</label>
+                <input type="date" id="date-from" name="from" value="<?php echo date(
+                    'Y-m-d',
+                ); ?>" class="h-10 p-2 border rounded"/>
+            </div>
+        </div>
+
         <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
             <thead class="border-2 border-black">
             <form action="/php-proj/public/transactions.php" method="get">
