@@ -127,27 +127,27 @@ function formatInvestmentType($type): string {
                 <tr>
                     <th>
                         <span class="inline-flex items-center">
-                            Date <button type="submit" onclick="document.querySelector('input[name=sortby]').value='date'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by date"></button>
+                            Date <button type="submit" onclick="document.querySelector('input[name=sortby]').value='date'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by date"></button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Account <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account"></button>
+                            Account <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by account"></button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Account Type <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account_type'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account type"></button>
+                            Account Type <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account_type'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by account type"></button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Asset Class <button type="submit" onclick="document.querySelector('input[name=sortby]').value='asset_class'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by asset class">                            </button>
+                            Asset Class <button type="submit" onclick="document.querySelector('input[name=sortby]').value='asset_class'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by asset class">                            </button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Amount <button type="submit" onclick="document.querySelector('input[name=sortby]').value='amount'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by Amount">                            </button>
+                            Amount <button type="submit" onclick="document.querySelector('input[name=sortby]').value='amount'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by Amount">                            </button>
                         </span>
                     </th>
                 <th><!-- empty slot for edit --></th>
