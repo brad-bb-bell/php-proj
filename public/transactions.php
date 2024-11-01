@@ -81,11 +81,11 @@ function formatInvestmentType($type): string {
     <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
         <thead class="border-2 border-black">
         <tr>
-            <th><span class="inline-flex items-center">Date <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
-            <th><span class="inline-flex items-center">Account <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
-            <th><span class="inline-flex items-center">Account Type <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
-            <th><span class="inline-flex items-center">Investment Type <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
-            <th><span class="inline-flex items-center">Amount <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2"></span></th>
+            <th><span class="inline-flex items-center">Date <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by date"></span></th>
+            <th><span class="inline-flex items-center">Account <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account"></span></th>
+            <th><span class="inline-flex items-center">Account Type <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account type"></span></th>
+            <th><span class="inline-flex items-center">Asset Class <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by asset class"></span></th>
+            <th><span class="inline-flex items-center">Amount <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by amount"></span></th>
             <th></th>
             <th></th>
         </tr>
