@@ -6,34 +6,70 @@ $username = 'root';
 $password = '';
 $dbname = 'contributions';
 
-try {
-    $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$sortby = null;
+$order = null;
 
-    $query = 'SELECT id, date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC';
+if (isset($_GET['sortby'])) {
+    $sortby = $_GET['sortby'];
+    if (isset($_GET['order'])) {
+        $order = $_GET['order'];
+    }
+    try {
+        $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // WHY NOT $database->prepare($query)
-    $stmt = $database->query($query);
-    // query() is used for direct, simple SQL queries that don't have any user input or variables
-    // prepare() is used when you have params/variables in your query that need to be safely inserted
+        $query = "SELECT id, date, account, account_type, asset_class, amount FROM Transactions ORDER BY $sortby $order";
 
-    // WHY NOT THIS? $transactions = $stmt->execute();
-    $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // execute() just runs the query but doesn't return the results
-    // fetch() or fetchALL() actually retrieves the data
-    // $stmt->execute() would just return TRUE or FALSE
+        // WHY NOT $database->prepare($query)
+        $stmt = $database->query($query);
+        // query() is used for direct, simple SQL queries that don't have any user input or variables
+        // prepare() is used when you have params/variables in your query that need to be safely inserted
 
-    // The FETCH_ASSOC part tells PDO to return the results as an associative array where you can access columns by name like $transaction['date'] instead of numeric indices.
+        // WHY NOT THIS? $transactions = $stmt->execute();
+        $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // execute() just runs the query but doesn't return the results
+        // fetch() or fetchALL() actually retrieves the data
+        // $stmt->execute() would just return TRUE or FALSE
 
-    $totalQuery = 'SELECT SUM(amount) as total FROM Transactions';
-    $totalStmt = $database->query($totalQuery);
-    $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
-} catch (PDOException $e) {
-    echo 'Error: ' . $e->getMessage();
-    $transactions = [];
-    $total = 0;
+        // The FETCH_ASSOC part tells PDO to return the results as an associative array where you can access columns by name like $transaction['date'] instead of numeric indices.
+
+        $totalQuery = 'SELECT SUM(amount) as total FROM Transactions';
+        $totalStmt = $database->query($totalQuery);
+        $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    } catch (PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+        $transactions = [];
+        $total = 0;
+    }
+} else {
+    try {
+        $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $query = 'SELECT id, date, account, account_type, asset_class, amount FROM Transactions ORDER BY date DESC';
+
+        // WHY NOT $database->prepare($query)
+        $stmt = $database->query($query);
+        // query() is used for direct, simple SQL queries that don't have any user input or variables
+        // prepare() is used when you have params/variables in your query that need to be safely inserted
+
+        // WHY NOT THIS? $transactions = $stmt->execute();
+        $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // execute() just runs the query but doesn't return the results
+        // fetch() or fetchALL() actually retrieves the data
+        // $stmt->execute() would just return TRUE or FALSE
+
+        // The FETCH_ASSOC part tells PDO to return the results as an associative array where you can access columns by name like $transaction['date'] instead of numeric indices.
+
+        $totalQuery = 'SELECT SUM(amount) as total FROM Transactions';
+        $totalStmt = $database->query($totalQuery);
+        $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    } catch (PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+        $transactions = [];
+        $total = 0;
+    }
 }
-
 // The following function uses type declaration ': string'
 // The function will throw an error if a string is not returned
 // This improves code documentation, better IDE support and type safety
@@ -77,18 +113,47 @@ function formatInvestmentType($type): string {
 }
 ?>
 
+
+
     <div class="max-w-screen-lg mx-auto">
-    <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
-        <thead class="border-2 border-black">
-        <tr>
-            <th><span class="inline-flex items-center">Date <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by date"></span></th>
-            <th><span class="inline-flex items-center">Account <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account"></span></th>
-            <th><span class="inline-flex items-center">Account Type <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account type"></span></th>
-            <th><span class="inline-flex items-center">Asset Class <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by asset class"></span></th>
-            <th><span class="inline-flex items-center">Amount <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by amount"></span></th>
-            <th></th> <!-- empty slot for edit -->
-            <th></th> <!-- empty slot fo delete -->
-        </tr>
+        <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
+            <thead class="border-2 border-black">
+            <form action="/php-proj/public/transactions.php" method="get">
+                <!-- Single set of hidden inputs at the form level -->
+                <input type="hidden" name="sortby" value="">
+                <input type="hidden" name="order" value="<?php echo isset($_GET['order']) && $_GET['order'] === 'asc'
+                    ? 'desc'
+                    : 'asc'; ?>">
+                <tr>
+                    <th>
+                        <span class="inline-flex items-center">
+                            Date <button type="submit" onclick="document.querySelector('input[name=sortby]').value='date'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by date"></button>
+                        </span>
+                    </th>
+                    <th>
+                        <span class="inline-flex items-center">
+                            Account <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account"></button>
+                        </span>
+                    </th>
+                    <th>
+                        <span class="inline-flex items-center">
+                            Account Type <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account_type'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account type"></button>
+                        </span>
+                    </th>
+                    <th>
+                        <span class="inline-flex items-center">
+                            Asset Class <button type="submit" onclick="document.querySelector('input[name=sortby]').value='asset_class'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by asset class">                            </button>
+                        </span>
+                    </th>
+                    <th>
+                        <span class="inline-flex items-center">
+                            Amount <button type="submit" onclick="document.querySelector('input[name=sortby]').value='amount'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by Amount">                            </button>
+                        </span>
+                    </th>
+                <th><!-- empty slot for edit --></th>
+                <th><!-- empty slot fo delete --></th>
+            </tr>
+        </form>
         </thead>
         <tbody>
         <?php foreach ($transactions as $transaction): ?>
