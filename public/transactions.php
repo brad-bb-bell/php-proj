@@ -86,8 +86,8 @@ function formatInvestmentType($type): string {
             <th><span class="inline-flex items-center">Account Type <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by account type"></span></th>
             <th><span class="inline-flex items-center">Asset Class <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by asset class"></span></th>
             <th><span class="inline-flex items-center">Amount <img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2 hover:cursor-pointer" alt="Sort by amount"></span></th>
-            <th></th>
-            <th></th>
+            <th></th> <!-- empty slot for edit -->
+            <th></th> <!-- empty slot fo delete -->
         </tr>
         </thead>
         <tbody>
