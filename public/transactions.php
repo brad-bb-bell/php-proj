@@ -131,6 +131,7 @@ function formatInvestmentType($type): string {
 }
 ?>
 
+<p class="text-white"><?php echo $currentPage; ?></p>
     <div class="max-w-screen-lg mx-auto ">
         <h1 class="text-2xl font-bold mb-4 text-center text-purple-50">Transactions</h1>
 
@@ -250,21 +251,21 @@ function formatInvestmentType($type): string {
         <div class="flex justify-center space-x-2 mt-4">
             <?php if ($currentPage > 1): ?>
                 <a href="<?php echo buildUrl(['page' => $currentPage - 1]); ?>"
-                   class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+                   class="px-4 py-2 bg-purple-400 text-white rounded hover:bg-purple-500">
                     Previous
                 </a>
             <?php endif; ?>
 
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                 <a href="<?php echo buildUrl(['page' => $i]); ?>"
-                   class="px-4 py-2 <?php echo $i === $currentPage ? 'bg-purple-700' : 'bg-purple-500'; ?> text-white rounded hover:bg-purple-600">
+                   class="px-4 py-2 <?php echo $i === (int)$currentPage ? 'bg-purple-500' : 'bg-purple-400'; ?> text-white rounded hover:bg-purple-500">
                     <?php echo $i; ?>
                 </a>
             <?php endfor; ?>
 
             <?php if ($currentPage < $totalPages): ?>
                 <a href="<?php echo buildUrl(['page' => $currentPage + 1]); ?>"
-                   class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+                   class="px-4 py-2 bg-purple-400 text-white rounded hover:bg-purple-500">
                     Next
                 </a>
             <?php endif; ?>
