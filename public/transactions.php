@@ -130,8 +130,6 @@ function formatInvestmentType($type): string {
 
     return implode(' ', $words);
 }
-echo "DEBUG: sortby = " . $sortby . "<br>";
-echo "DEBUG: order = " . $order . "<br>";
 
 ?>
     <div class="max-w-screen-lg mx-auto ">
