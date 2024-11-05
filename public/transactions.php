@@ -130,6 +130,9 @@ function formatInvestmentType($type): string {
 
     return implode(' ', $words);
 }
+echo "DEBUG: sortby = " . $sortby . "<br>";
+echo "DEBUG: order = " . $order . "<br>";
+
 ?>
     <div class="max-w-screen-lg mx-auto ">
         <h1 class="text-2xl font-bold mb-4 text-center text-purple-50">Transactions</h1>
@@ -167,39 +170,37 @@ function formatInvestmentType($type): string {
 
         <table class="border-2 border-black w-full bg-purple-200 text-black rounded mb-8">
             <thead class="border-2 border-black">
-            <form action="/php-proj/public/transactions.php" method="get">
+            <form action="/php-proj/public/transactions.php" method="get" id="sortForm">
                 <input type="hidden" name="items" value="<?php echo htmlspecialchars($itemsPerPage); ?>">
                 <input type="hidden" name="date_from" value="<?php echo htmlspecialchars($dateFrom); ?>">
                 <input type="hidden" name="date_to" value="<?php echo htmlspecialchars($dateTo); ?>">
                 <input type="hidden" name="page" value="1">  <!-- Reset to first page on sort -->
                 <input type="hidden" name="sortby" value="<?php echo htmlspecialchars($sortby); ?>">
-                <input type="hidden" name="order" value="<?php echo isset($_GET['order']) && $_GET['order'] === 'asc'
-                    ? 'desc'
-                    : 'asc'; ?>">
+                <input type="hidden" name="order" value="<?php echo htmlspecialchars($order); ?>">
                 <tr>
                     <th>
                         <span class="inline-flex items-center">
-                            Date <button type="submit" onclick="document.querySelector('input[name=sortby]').value='date'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by date"></button>
+                            Date <button type="submit" onclick="return handleSort('date')"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by date"></button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Account <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by account"></button>
+                            Account <button type="submit" onclick="return handleSort('account')"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by account"></button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Account Type <button type="submit" onclick="document.querySelector('input[name=sortby]').value='account_type'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by account type"></button>
+                            Account Type <button type="submit" onclick="return handleSort('account_type')"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by account type"></button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Asset Class <button type="submit" onclick="document.querySelector('input[name=sortby]').value='asset_class'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by asset class">                            </button>
+                            Asset Class <button type="submit" onclick="return handleSort('asset_class')"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by asset class">                            </button>
                         </span>
                     </th>
                     <th>
                         <span class="inline-flex items-center">
-                            Amount <button type="submit" onclick="document.querySelector('input[name=sortby]').value='amount'"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by Amount">                            </button>
+                            Amount <button type="submit" onclick="return handleSort('amount')"><img src="../assets/icons/arrow-down-up.svg" class="w-3 ml-2" alt="Sort by Amount">                            </button>
                         </span>
                     </th>
                 <th><!-- empty slot for edit --></th>
@@ -302,4 +303,33 @@ function formatInvestmentType($type): string {
     <?php endif; ?>
 
     </div>
+
+    <script>
+    function handleSort(column) {
+        const sortbyInput = document.querySelector('input[name=sortby]');
+        const orderInput = document.querySelector('input[name=order]');
+
+        // Determine the new sort values
+        let newOrder;
+        if (sortbyInput.value === column) {
+            newOrder = orderInput.value === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortbyInput.value = column;
+            newOrder = 'asc';
+        }
+
+        // Get all the current form values
+        const items = document.querySelector('input[name=items]').value;
+        const dateFrom = document.querySelector('input[name=date_from]').value;
+        const dateTo = document.querySelector('input[name=date_to]').value;
+
+        // Construct the URL
+        const url = `/php-proj/public/transactions.php?items=${items}&date_from=${dateFrom}&date_to=${dateTo}&page=1&sortby=${column}&order=${newOrder}`;
+
+        // Redirect to the new URL
+        window.location.href = url;
+        return false;
+    }
+    </script>
+
 <?php require_once '../includes/footer.php'; ?>
