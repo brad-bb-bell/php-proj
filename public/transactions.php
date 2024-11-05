@@ -18,27 +18,28 @@ try {
     $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // build the base query
-    $baseQuery = "SELECT id, date, account, account_type, asset_class, amount FROM Transactions WHERE date BETWEEN :date_from AND :date_to";
+    $baseQuery =
+        'SELECT id, date, account, account_type, asset_class, amount FROM Transactions WHERE date BETWEEN :date_from AND :date_to';
     // add sorting
     $baseQuery .= " ORDER BY $sortby $order";
 
     // first get the total count for pagination
-    $countQuery = str_replace("id, date, account, account_type, asset_class, amount", "COUNT(*) as count", $baseQuery);
+    $countQuery = str_replace('id, date, account, account_type, asset_class, amount', 'COUNT(*) as count', $baseQuery);
     $countStmt = $database->prepare($countQuery);
     $countStmt->execute([
         ':date_from' => $dateFrom,
-        ':date_to' => $dateTo
+        ':date_to' => $dateTo,
     ]);
     $totalCount = $countStmt->fetch(PDO::FETCH_ASSOC)['count'];
 
     // calculate pagination
-    $itemsPerPage = $itemsPerPage === 'ALL' ? $totalCount : (int)$itemsPerPage;
+    $itemsPerPage = $itemsPerPage === 'ALL' ? $totalCount : (int) $itemsPerPage;
     $totalPages = ceil($totalCount / $itemsPerPage);
     $offset = ($currentPage - 1) * $itemsPerPage;
 
     // add pagination to query if not showing all
     if ($itemsPerPage !== $totalCount) {
-        $baseQuery .= " LIMIT :limit OFFSET :offset";
+        $baseQuery .= ' LIMIT :limit OFFSET :offset';
     }
 
     // prepare and execute main query
@@ -53,14 +54,13 @@ try {
     $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // get the total amount for filtered results
-    $totalQuery = "SELECT SUM(amount) as total FROM Transactions WHERE date BETWEEN :date_from AND :date_to";
+    $totalQuery = 'SELECT SUM(amount) as total FROM Transactions WHERE date BETWEEN :date_from AND :date_to';
     $totalStmt = $database->prepare($totalQuery);
     $totalStmt->execute([
         ':date_from' => $dateFrom,
-        ':date_to' => $dateTo
+        ':date_to' => $dateTo,
     ]);
     $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
-
 } catch (PDOException $e) {
     echo 'Error: ' . $e->getMessage();
     $transactions = [];
@@ -130,8 +130,6 @@ function formatInvestmentType($type): string {
     return implode(' ', $words);
 }
 ?>
-
-<p class="text-white"><?php echo $currentPage; ?></p>
     <div class="max-w-screen-lg mx-auto ">
         <h1 class="text-2xl font-bold mb-4 text-center text-purple-50">Transactions</h1>
 
@@ -154,11 +152,15 @@ function formatInvestmentType($type): string {
             </div>
             <div class="flex flex-col space-y-2 ">
                 <label for="date_from" class="text-left text-purple-50">From:</label>
-                <input type="date" id="date_from" name="date_from" value="<?php echo htmlspecialchars($dateFrom); ?>" class="h-10 p-2 border rounded" onchange="this.form.submit()" />
+                <input type="date" id="date_from" name="date_from" value="<?php echo htmlspecialchars(
+                    $dateFrom,
+                ); ?>" class="h-10 p-2 border rounded" onchange="this.form.submit()" />
             </div>
             <div class="flex flex-col space-y-2">
                 <label for="date_to" class="text-left text-purple-50">To:</label>
-                <input type="date" id="date_to" name="date_to" value="<?php echo htmlspecialchars($dateTo); ?>" class="h-10 p-2 border rounded" onchange="this.form.submit()" />
+                <input type="date" id="date_to" name="date_to" value="<?php echo htmlspecialchars(
+                    $dateTo,
+                ); ?>" class="h-10 p-2 border rounded" onchange="this.form.submit()" />
             </div>
         </form>
 
@@ -241,7 +243,7 @@ function formatInvestmentType($type): string {
         <tfoot class="border-2 border-black">
         <tr>
             <td colspan="4">Total Contributions</td>
-            <td>$<?php echo number_format($total); ?></td>
+            <td>$<?php echo $total; ?></td>
             <td colspan="2"></td>
         </tr>
         </tfoot>
@@ -249,26 +251,32 @@ function formatInvestmentType($type): string {
 
     <?php if ($itemsPerPage !== 'ALL' && $totalPages > 1): ?>
         <div class="flex justify-center space-x-2 mt-4">
-            <?php if ($currentPage > 1): ?>
-                <a href="<?php echo buildUrl(['page' => $currentPage - 1]); ?>"
-                   class="px-4 py-2 bg-purple-400 text-white rounded hover:bg-purple-500">
-                    Previous
-                </a>
-            <?php endif; ?>
+            <a href="<?php echo $currentPage > 1 ? buildUrl(['page' => $currentPage - 1]) : '#'; ?>"
+               class="px-4 py-2 rounded <?php echo $currentPage > 1
+                   ? 'bg-purple-300 hover:bg-purple-400 cursor-pointer'
+                   : 'bg-purple-300 cursor-not-allowed'; ?>"
+                <?php echo $currentPage <= 1 ? 'aria-disabled="true"' : ''; ?>
+               role="button">
+                Previous
+            </a>
 
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                 <a href="<?php echo buildUrl(['page' => $i]); ?>"
-                   class="px-4 py-2 <?php echo $i === (int)$currentPage ? 'bg-purple-500' : 'bg-purple-400'; ?> text-white rounded hover:bg-purple-500">
+                   class="px-4 py-2 <?php echo $i === (int) $currentPage
+                       ? 'bg-purple-400'
+                       : 'bg-purple-200'; ?> rounded hover:bg-purple-400">
                     <?php echo $i; ?>
                 </a>
             <?php endfor; ?>
 
-            <?php if ($currentPage < $totalPages): ?>
-                <a href="<?php echo buildUrl(['page' => $currentPage + 1]); ?>"
-                   class="px-4 py-2 bg-purple-400 text-white rounded hover:bg-purple-500">
-                    Next
-                </a>
-            <?php endif; ?>
+            <a href="<?php echo $currentPage < $totalPages ? buildUrl(['page' => $currentPage + 1]) : '#'; ?>"
+               class="px-4 py-2 rounded <?php echo $currentPage < $totalPages
+                   ? 'bg-purple-300 hover:bg-purple-400 cursor-pointer'
+                   : 'bg-purple-300 cursor-not-allowed'; ?>"
+                <?php echo $currentPage >= $totalPages ? 'aria-disabled="true"' : ''; ?>
+               role="button">
+                Next
+            </a>
         </div>
     <?php endif; ?>
         
