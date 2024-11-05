@@ -254,7 +254,7 @@ function formatInvestmentType($type): string {
             <a href="<?php echo $currentPage > 1 ? buildUrl(['page' => $currentPage - 1]) : '#'; ?>"
                class="px-4 py-2 rounded bg-purple-300 <?php echo $currentPage > 1
                    ? 'hover:bg-purple-400 cursor-pointer'
-                   : 'text-gray-200 cursor-not-allowed'; ?>"
+                   : 'text-gray-500 cursor-not-allowed'; ?>"
                 <?php echo $currentPage <= 1 ? 'aria-disabled="true"' : ''; ?>
                role="button">
                 Previous
@@ -292,7 +292,7 @@ function formatInvestmentType($type): string {
             <a href="<?php echo $currentPage < $totalPages ? buildUrl(['page' => $currentPage + 1]) : '#'; ?>"
                class="px-4 py-2 rounded bg-purple-300 <?php echo $currentPage < $totalPages
                    ? 'hover:bg-purple-400 cursor-pointer'
-                   : 'text-gray-200 cursor-not-allowed'; ?>"
+                   : 'text-gray-500 cursor-not-allowed'; ?>"
                 <?php echo $currentPage >= $totalPages ? 'aria-disabled="true"' : ''; ?>
                role="button">
                 Next
