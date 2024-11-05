@@ -61,6 +61,7 @@ try {
         ':date_to' => $dateTo,
     ]);
     $total = $totalStmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+    $total = array_sum(array_column($transactions, 'amount'));
 } catch (PDOException $e) {
     echo 'Error: ' . $e->getMessage();
     $transactions = [];
