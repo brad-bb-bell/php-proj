@@ -260,14 +260,34 @@ function formatInvestmentType($type): string {
                 Previous
             </a>
 
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <?php
+            $window = 2; // How many pages to show before and after current page
+            if ($currentPage > $window + 1): ?>
+                <a href="<?php echo buildUrl(['page' => 1]); ?>"
+                   class="px-4 py-2 bg-purple-200 rounded hover:bg-purple-400">1</a>
+                <?php if ($currentPage > $window + 2): ?>
+                    <span class="px-4 py-2">...</span>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <?php
+            // Pages around current page
+            for ($i = max(1, $currentPage - $window); $i <= min($totalPages, $currentPage + $window); $i++): ?>
                 <a href="<?php echo buildUrl(['page' => $i]); ?>"
-                   class="px-4 py-2 <?php echo $i === (int) $currentPage
-                       ? 'bg-purple-400'
-                       : 'bg-purple-200'; ?> rounded hover:bg-purple-400">
+                   class="px-4 py-2 <?php echo $i === (int)$currentPage ? 'bg-purple-400' : 'bg-purple-200'; ?> rounded hover:bg-purple-400">
                     <?php echo $i; ?>
                 </a>
             <?php endfor; ?>
+
+            <?php
+            // Last page
+            if ($currentPage < $totalPages - $window): ?>
+                <?php if ($currentPage < $totalPages - $window - 1): ?>
+                    <span class="px-4 py-2">...</span>
+                <?php endif; ?>
+                <a href="<?php echo buildUrl(['page' => $totalPages]); ?>"
+                   class="px-4 py-2 bg-purple-200 rounded hover:bg-purple-400"><?php echo $totalPages; ?></a>
+            <?php endif; ?>
 
             <a href="<?php echo $currentPage < $totalPages ? buildUrl(['page' => $currentPage + 1]) : '#'; ?>"
                class="px-4 py-2 rounded <?php echo $currentPage < $totalPages
