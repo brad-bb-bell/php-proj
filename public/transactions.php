@@ -252,9 +252,9 @@ function formatInvestmentType($type): string {
     <?php if ($itemsPerPage !== 'ALL' && $totalPages > 1): ?>
         <div class="flex justify-center space-x-2 mt-4">
             <a href="<?php echo $currentPage > 1 ? buildUrl(['page' => $currentPage - 1]) : '#'; ?>"
-               class="px-4 py-2 rounded <?php echo $currentPage > 1
-                   ? 'bg-purple-300 hover:bg-purple-400 cursor-pointer'
-                   : 'bg-purple-300 cursor-not-allowed'; ?>"
+               class="px-4 py-2 rounded bg-purple-300 <?php echo $currentPage > 1
+                   ? 'hover:bg-purple-400 cursor-pointer'
+                   : 'text-gray-200 cursor-not-allowed'; ?>"
                 <?php echo $currentPage <= 1 ? 'aria-disabled="true"' : ''; ?>
                role="button">
                 Previous
@@ -290,9 +290,9 @@ function formatInvestmentType($type): string {
             <?php endif; ?>
 
             <a href="<?php echo $currentPage < $totalPages ? buildUrl(['page' => $currentPage + 1]) : '#'; ?>"
-               class="px-4 py-2 rounded <?php echo $currentPage < $totalPages
-                   ? 'bg-purple-300 hover:bg-purple-400 cursor-pointer'
-                   : 'bg-purple-300 cursor-not-allowed'; ?>"
+               class="px-4 py-2 rounded bg-purple-300 <?php echo $currentPage < $totalPages
+                   ? 'hover:bg-purple-400 cursor-pointer'
+                   : 'text-gray-200 cursor-not-allowed'; ?>"
                 <?php echo $currentPage >= $totalPages ? 'aria-disabled="true"' : ''; ?>
                role="button">
                 Next
