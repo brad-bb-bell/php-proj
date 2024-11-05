@@ -19,7 +19,7 @@
                     <a href="/php-proj/public/index.php" class="text-gray-800 hover:text-black no-underline">Home</a>
                 </li>
                 <li class="inline mr-7">
-                    <a href="/php-proj/public/contributions.php" class="text-gray-800 hover:text-black no-underline">Contributions by Type</a>
+                    <a href="/php-proj/public/contributions.php" class="text-gray-800 hover:text-black no-underline">Amounts</a>
                 </li>
                 <li class="inline mr-7">
                     <a href="/php-proj/public/transactions.php" class="text-gray-800 hover:text-black no-underline">Transactions</a>
