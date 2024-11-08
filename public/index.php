@@ -1,6 +1,12 @@
 <?php
 require_once '../config/create_db.php';
 require_once '../includes/header.php';
+require_once 'auth.php';
+
+if (!isAuthenticated()) {
+    header('Location: login.php');
+    exit();
+}
 
 $servername = 'localhost';
 $username = 'root';
@@ -176,7 +182,14 @@ try {
             <div class="bg-green-100 mx-auto max-w-lg border border-green-400 text-center text-green-700 px-4 py-3 rounded mb-4">
                 Transaction saved successfully!
             </div>
-        <?php elseif ($_GET['status'] === 'error'): ?>
+        <?php
+            //echo htmlspecialchars($_GET['message']);
+            //echo htmlspecialchars($_GET['message']);
+            //echo htmlspecialchars($_GET['message']);
+            //echo htmlspecialchars($_GET['message']);
+            //echo htmlspecialchars($_GET['message']);
+            //echo htmlspecialchars($_GET['message']);
+            elseif ($_GET['status'] === 'error'): ?>
             <div class="bg-red-100 mx-auto max-w-lg border border-red-400 text-center text-red-700 px-4 py-3 rounded mb-4">
                 <!-- Error saving transaction: --><?php
             //echo htmlspecialchars($_GET['message']);
