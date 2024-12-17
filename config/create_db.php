@@ -13,6 +13,8 @@ try {
     echo $e->getMessage();
 }
 
+// Each block has its own try-catch because you want to handle database creation errors separately from table creation errors - they could fail for different reasons.
+
 try {
     $database = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
