@@ -99,6 +99,9 @@ function formatAccountType($type): string {
     if ($type === '529-college-fund') {
         return '529 College Fund';
     }
+    if ($type === 'retirement-traditional-ira') {
+        return 'Retirement - Traditional IRA';
+    }
 
     $words = explode('-', $type);
     $words = array_map(function ($word) {
